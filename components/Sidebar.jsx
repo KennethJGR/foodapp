@@ -7,8 +7,12 @@ const Sidebar = () => {
     const { categories } = useQuiosco();
     return (
         <>
-            <Image src="/assets/img/logo.svg" alt="logo" width={250} height={100} />
-            <nav>
+            <Image src="/assets/img/logo.svg" alt="logo" width={200} height={100}
+            className="mx-auto mt-5"
+            />
+            <nav
+            className="mt-10"
+            >
                 {categories.map((category) => (
                     <Category key={category.id} category={category} />
                 ))}
