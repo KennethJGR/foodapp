@@ -102,7 +102,7 @@ const ModalProduct = () => {
                 </div>
                 <button
                     type="button"
-                    className="bg-amber-500 hover:bg-amber-600  mt-4 p-2 text-white uppercase font-bold rounded"
+                    className="bg-amber-500 hover:bg-amber-600  mt-4 p-2 text-white uppercase font-bold rounded transition duration-500 ease-in-out"
                     onClick={() => handleOrder({ ...products, quantity })}
                 >
                     Save Order

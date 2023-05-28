@@ -1,8 +1,11 @@
 import React from "react";
 import Image from "next/image";
 import useQuiosco from "../hooks/useQuiosco";
+import { useRouter } from "next/router";
 
 const Category = ({ category }) => {
+    const router = useRouter();
+
     const { handleActiveCategory, activeCategory } = useQuiosco();
 
     const { id, name, icon } = category;
@@ -10,7 +13,10 @@ const Category = ({ category }) => {
     return (
         <button
             type="button"
-            onClick={() => handleActiveCategory(id)}
+            onClick={() => {
+                handleActiveCategory(id);
+                router.push("/");
+            }}
             className={`${activeCategory?.id === id
                     ? "bg-gradient-to-r from-amber-200 to-amber-300"
                     : ""

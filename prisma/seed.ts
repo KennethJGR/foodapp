@@ -12,9 +12,7 @@ const main = async (): Promise<void> => {
         await prisma.product.createMany({
             data: products,
         });
-    } catch (error) {
-        console.log(error);
-    }
+    } catch (error) { }
 };
 
 main();
