@@ -13,7 +13,7 @@ export default function Summary() {
 
             {order.length === 0 ? (
                 <p className="text-2xl text-gray-800 text-center mt-10">
-                    There's no products
+                   No products
                 </p>
             ) : (
                 order.map((order) => <SummaryProduct order={order} key={order.id} />)
