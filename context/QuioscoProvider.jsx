@@ -17,7 +17,7 @@ const QuioscoProvider = ({ children }) => {
     const router = useRouter();
 
     const getCategories = async () => {
-        const res = await axios.get("http://localhost:3000/api/categories");
+        const res = await axios.get("/api/categories");
         setCategories(res.data);
     };
 
