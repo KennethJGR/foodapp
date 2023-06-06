@@ -1,9 +1,10 @@
 import { useEffect, useCallback } from "react";
 import Layout from "../../layouts/Layout";
 import useQuiosco from "../../hooks/useQuiosco";
+import { formatMoney } from "../../helpers";
 
 export default function Total() {
-    const { order, name, setName } = useQuiosco();
+    const { order, name, setName, placeOrder, total } = useQuiosco();
 
     const checkForm = useCallback(() => {
         return order.length === 0;
@@ -12,11 +13,6 @@ export default function Total() {
     useEffect(() => {
         checkForm();
     }, [order, checkForm]);
-
-    const placeOrder = (e) => {
-        e.preventDefault();
-        console.log("Order placed");
-    };
 
     return (
         <Layout>
@@ -44,7 +40,7 @@ export default function Total() {
                 <div className="mt-10">
                     <p className="text-2xl text-black-800 font-bold">
                         Order:
-                        <span className="font-bold">$</span>
+                        <span className="font-bold">{formatMoney(total)}</span>
                     </p>
                 </div>
 

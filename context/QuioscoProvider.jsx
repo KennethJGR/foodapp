@@ -1,6 +1,7 @@
 import { useState, useEffect, createContext } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 
 const QuioscoContext = createContext();
 
@@ -11,6 +12,9 @@ const QuioscoProvider = ({ children }) => {
     const [modal, setModal] = useState(false);
     const [order, setOrder] = useState([]);
     const [name, setName] = useState("");
+    const [total, setTotal] = useState(0);
+
+    const router = useRouter();
 
     const getCategories = async () => {
         const res = await axios.get("http://localhost:3000/api/categories");
@@ -25,6 +29,14 @@ const QuioscoProvider = ({ children }) => {
         const random = Math.floor(Math.random() * categories.length);
         setActiveCategory(categories[random]);
     }, [categories]);
+
+    useEffect(() => {
+        const newTotal = order.reduce(
+            (total, product) => product.price * product.quantity + total,
+            0
+        );
+        setTotal(newTotal);
+    }, [order]);
 
     const handleActiveCategory = (id) => {
         const category = categories.find((category) => category.id === id);
@@ -75,6 +87,36 @@ const QuioscoProvider = ({ children }) => {
         toast.error("Order deleted");
     };
 
+    const placeOrder = async (e) => {
+        e.preventDefault();
+
+        try {
+            await axios.post("http://localhost:3000/api/orders", {
+                order,
+                name,
+                total,
+                date: Date.now().toString(),
+            });
+
+            //reset order
+            setActiveCategory(categories[0]);
+            setOrder([]);
+            setName("");
+            setTotal(0);
+
+            toast.success("Order placed");
+
+            setTimeout(() => {
+                router.push("/");
+            }, 3000);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+   
+
+
     return (
         <QuioscoContext.Provider
             value={{
@@ -91,6 +133,8 @@ const QuioscoProvider = ({ children }) => {
                 deleteOrder,
                 name,
                 setName,
+                placeOrder,
+                total,
             }}
         >
             {children}
